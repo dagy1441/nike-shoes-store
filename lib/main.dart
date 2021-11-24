@@ -30,7 +30,7 @@ class NikeShoesStoreHome extends StatelessWidget {
       PageRouteBuilder(pageBuilder: (context, animation1, animation2) {
         return FadeTransition(
           opacity: animation1,
-          child: NikeShoesDetails(),
+          child: NikeShoesDetails(shoes: shoes),
         );
       }),
     );
@@ -50,7 +50,7 @@ class NikeShoesStoreHome extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/images/nike_logo.png',
-                  height: 40,
+                  height: 50,
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -129,23 +129,32 @@ class NikeShoesItem extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: Color(shoesItem.color),
+                child: Hero(
+                  tag: 'background_${shoesItem.model}',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Color(shoesItem.color),
+                    ),
                   ),
                 ),
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child: SizedBox(
-                  height: itemHeight * 0.7,
-                  child: FittedBox(
-                    child: Text(
-                      shoesItem.modelNumber.toString(),
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.05),
-                        fontWeight: FontWeight.bold,
+                child: Hero(
+                  tag: 'number_${shoesItem.model}',
+                  child: SizedBox(
+                    height: itemHeight * 0.7,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: FittedBox(
+                        child: Text(
+                          shoesItem.modelNumber.toString(),
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.05),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -155,9 +164,12 @@ class NikeShoesItem extends StatelessWidget {
                 top: 20,
                 left: 100,
                 height: itemHeight * 0.65,
-                child: Image.asset(
-                  shoesItem.images.first,
-                  fit: BoxFit.contain,
+                child: Hero(
+                  tag: 'image_${shoesItem.model}',
+                  child: Image.asset(
+                    shoesItem.images.first,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               Positioned(
@@ -212,6 +224,44 @@ class NikeShoesItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ShakeTransition extends StatelessWidget {
+  final Widget child;
+  final Duration duration;
+  final double offset;
+  final Axis axis;
+  ShakeTransition({
+    Key? key,
+    required this.child,
+    this.offset = 140,
+    this.duration = const Duration(milliseconds: 900),
+    this.axis = Axis.horizontal,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      child: child,
+      tween: Tween(begin: 1.0, end: 0.0),
+      duration: duration,
+      curve: Curves.elasticOut,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: axis == Axis.horizontal
+              ? Offset(
+                  value * offset,
+                  0.0,
+                )
+              : Offset(
+                  0.0,
+                  value * offset,
+                ),
+          child: child,
+        );
+      },
     );
   }
 }
