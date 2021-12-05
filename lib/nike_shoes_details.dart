@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nike_shoes_store/main.dart';
-import 'package:nike_shoes_store/nike_shoes.dart';
+import 'package:nike_shoes_store/models/nike_shoes.dart';
 import 'package:nike_shoes_store/nike_shopping_cart.dart';
+import 'package:nike_shoes_store/widgets/shake_transition_animation.dart';
+import 'package:nike_shoes_store/widgets/shoes_size_item.dart';
 
 class NikeShoesDetails extends StatelessWidget {
   final NikeShoes shoes;
@@ -233,25 +234,6 @@ class NikeShoesDetails extends StatelessWidget {
                 );
               }),
         ],
-      ),
-    );
-  }
-}
-
-class ShoesSizeItem extends StatelessWidget {
-  final String text;
-  ShoesSizeItem({Key? key, required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: Text(
-        'US $text',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 11,
-        ),
       ),
     );
   }

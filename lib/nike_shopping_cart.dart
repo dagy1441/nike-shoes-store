@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:nike_shoes_store/nike_shoes.dart';
+import 'package:nike_shoes_store/models/nike_shoes.dart';
+import 'package:nike_shoes_store/widgets/shoes_size_button.dart';
 
 const _buttonSizeWidth = 160.0;
 const _buttonSizeHeight = 60.0;
@@ -157,10 +158,10 @@ class _NikeShoppingCartState extends State<NikeShoppingCart>
               ),
             ),
             Divider(
-                //  height: 10,
-                //thickness: 2,
-                //color: Colors.black12,
-                ),
+              height: 10,
+              //thickness: 2,
+              //color: Colors.black12,
+            ),
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -289,37 +290,6 @@ class _NikeShoppingCartState extends State<NikeShoppingCart>
               ),
             ],
           );
-        },
-      ),
-    );
-  }
-}
-
-class ShoesSizeButton extends StatelessWidget {
-  final String text;
-  const ShoesSizeButton({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: TextButton(
-        child: Text(
-          'US $text',
-          style: TextStyle(color: Colors.black),
-        ),
-        style: TextButton.styleFrom(
-          primary: Colors.black,
-          side: BorderSide(
-            color: Colors.black12,
-            width: 1,
-          ),
-        ),
-        onPressed: () {
-          print('Pressed ----------');
         },
       ),
     );
