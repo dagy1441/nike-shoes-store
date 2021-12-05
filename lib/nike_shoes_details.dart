@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shoes_store/main.dart';
 import 'package:nike_shoes_store/nike_shoes.dart';
+import 'package:nike_shoes_store/nike_shopping_cart.dart';
 
 class NikeShoesDetails extends StatelessWidget {
   final NikeShoes shoes;
   final ValueNotifier<bool> notifierButtonsVisible = ValueNotifier(false);
 
   NikeShoesDetails({Key? key, required this.shoes}) : super(key: key);
+
+  Future<void> _openShoppongCart(BuildContext context) async {
+    notifierButtonsVisible.value = false;
+    await Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, animation1, __) {
+          return FadeTransition(
+            opacity: animation1,
+            child: NikeShoppingCart(shoes: shoes),
+          );
+        },
+      ),
+    );
+    notifierButtonsVisible.value = true;
+  }
 
   Widget _buildCarousel(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -31,7 +48,7 @@ class NikeShoesDetails extends StatelessWidget {
               child: ShakeTransition(
                 axis: Axis.vertical,
                 duration: Duration(milliseconds: 1400),
-                offset: 20,
+                offset: 15,
                 child: Material(
                   color: Colors.transparent,
                   child: FittedBox(
@@ -56,10 +73,10 @@ class NikeShoesDetails extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   child: ShakeTransition(
-                    offset: 0,
-                    duration: index == 0
-                        ? const Duration(milliseconds: 900)
-                        : Duration.zero,
+                    //offset: 0,
+                    // duration: index == 0
+                    //     ? const Duration(milliseconds: 900)
+                    //     : Duration.zero,
                     axis: Axis.vertical,
                     child: Hero(
                       tag: tag,
@@ -199,7 +216,9 @@ class NikeShoesDetails extends StatelessWidget {
                       heroTag: 'fav_2',
                       backgroundColor: Colors.black,
                       child: Icon(Icons.shopping_bag_outlined),
-                      onPressed: () {},
+                      onPressed: () {
+                        _openShoppongCart(context);
+                      },
                     ),
                   ],
                 ),
@@ -208,7 +227,7 @@ class NikeShoesDetails extends StatelessWidget {
                 return AnimatedPositioned(
                   left: 0,
                   right: 0,
-                  bottom: value ? 0.0 : -kToolbarHeight,
+                  bottom: value ? 0.0 : -kToolbarHeight * 1.5,
                   duration: Duration(milliseconds: 250),
                   child: child!,
                 );

@@ -143,16 +143,20 @@ class NikeShoesItem extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: Hero(
                   tag: 'number_${shoesItem.model}',
-                  child: SizedBox(
-                    height: itemHeight * 0.7,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: FittedBox(
-                        child: Text(
-                          shoesItem.modelNumber.toString(),
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.05),
-                            fontWeight: FontWeight.bold,
+                  child: ShakeTransition(
+                    axis: Axis.horizontal,
+                    duration: Duration(milliseconds: 1000),
+                    child: SizedBox(
+                      height: itemHeight * 0.7,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: FittedBox(
+                          child: Text(
+                            shoesItem.modelNumber.toString(),
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.05),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
